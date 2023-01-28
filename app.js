@@ -7,8 +7,14 @@ function printResult(num) {
 console.log(printResult(add(5, 12)));
 printResult(add(5, 12));
 var combineValues;
+// You can be more specific.
+// let combineValues: Function;
+// Makes it clear - Everything that we store here is a function
+// let combineValues: (a:number, b: number) => number; 
 // Combine values except any function that takes 2 paramenters for each parameter is a number and then returns a number;
 combineValues = add;
 // combineValues = printResult;
+// combineValues = printResult;
+console.log('Your Answer');
 console.log(combineValues(8, 8));
 // let someValue: undefined;
