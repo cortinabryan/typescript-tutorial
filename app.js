@@ -1,20 +1,20 @@
-function add(n1, n2) {
-    return n1 + n2;
+var userInput;
+var userName;
+userInput = 5;
+userInput = 'Max';
+if (typeof userInput === 'string') {
+    userName = userInput;
 }
-function printResult(num) {
-    console.log('Result:' + num);
+function generateError(message, code) {
+    throw { message: message, errorCode: code };
 }
-console.log(printResult(add(5, 12)));
-printResult(add(5, 12));
-var combineValues;
-// You can be more specific.
-// let combineValues: Function;
-// Makes it clear - Everything that we store here is a function
-// let combineValues: (a:number, b: number) => number; 
-// Combine values except any function that takes 2 paramenters for each parameter is a number and then returns a number;
-combineValues = add;
-// combineValues = printResult;
-// combineValues = printResult;
-console.log('Your Answer');
-console.log(combineValues(8, 8));
-// let someValue: undefined;
+generateError('An error occured!', 500);
+// never
+// never return anything
+// -
+// unknown
+// function that checks if the value is a string
+// if it is we can safely assign the type string to unknown
+// * it adds a layer of type checking basically
+// unknown is better than any
+// unknown isnt something you use all the time like any... but its better than using any
