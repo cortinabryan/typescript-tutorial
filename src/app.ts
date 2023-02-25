@@ -1,10 +1,12 @@
-const button = document.querySelector("button")!;
+// const button = document.querySelector("button")!;
 
-function clickHandler(message: string) {
-  console.log("Clicked! " + message);
-}
+// function clickHandler(message: string) {
+//   console.log("Clicked! " + message);
+// }
 
 // a comment
-if (button) {
-  button.addEventListener("click", clickHandler.bind(null, "You're Welcome!"));
-}
+// if (button) {
+//   button.addEventListener("click", clickHandler.bind(null, "You're Welcome!"));
+// }
+
+console.log("test");
