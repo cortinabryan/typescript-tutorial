@@ -1,8 +1,8 @@
-class Department {
+class EUTeam {
   // Field of a class
   // private id: string;
   // public name: string; // value type - you're basically assigning a type
-  private employees: string[] = [];
+  protected players: string[] = [];
   // definies the key you'll have in your object
 
   constructor(private readonly id: string, public name: string) {
@@ -11,39 +11,141 @@ class Department {
   }
   // constructor is a reseved keyword understood by typescript
 
-  describe(this: Department) {
-    console.log(`Department (${this.id}): ${this.name}`);
+  describe(this: EUTeam) {
+    console.log(`EUTeam (${this.id}): ${this.name}`);
   }
-  addEmployee(employee: string) {
-    this.id = "d2";
-    this.employees.push(employee);
+  addPlayer(player: string) {
+    // this.id = "d2";
+    this.players.push(player);
   }
-  printEmployeeInformation() {
-    console.log(this.employees.length);
-    console.log(this.employees);
+  printPlayerInformation() {
+    console.log(this.players.length);
+    console.log(this.players);
   }
 }
 
-const accounting = new Department("d1", "Accounting"); // This is basically creating a new JAVASCRIPT OBJECT based on the blueprint
+class USTeam extends EUTeam {
+  coach: string[];
+  constructor(id: string, coach: string[]) {
+    super(id, "Shopify Rebellion"); // super has to be called before this. keyword
+    this.coach = coach;
+  }
+}
 
-accounting.addEmployee("Insania");
-accounting.addEmployee("Matumbaman");
+class SEATeam extends EUTeam {
+  private lastReport: string;
 
-// accounting.employees[2] = "Nisha"; // Wont work because its private
+  get mostRecentReport() {
+    if (this.lastReport) {
+      return this.lastReport;
+    }
+    throw new Error("No report found.");
+  }
 
-accounting.describe();
-accounting.name = "NEW NAME";
-accounting.printEmployeeInformation();
+  set mostRecentReport(value: string) {
+    if (!value) {
+      throw new Error("Please pass in a valid value!");
+    }
+    this.addReport(value);
+  }
 
-// console.log(accounting);
+  coach: string[];
+  constructor(
+    id: string,
+    coach: string[],
+    private waterboy: string[],
+    reports: string[]
+  ) {
+    super(id, "Talon");
+    this.coach = coach;
+    this.waterboy = waterboy;
+    this.lastReport = reports[0];
+  }
 
-// accounting.addEmployee("Bryan");
-// accounting.addEmployee("Kevin");
+  addPlayer(name: string) {
+    if (name === "Bryan") {
+      return;
+    }
+    this.players.push(name);
+  }
 
-// accounting.describe();
-// accounting.printEmployeeInformation();
+  getWater(text: string) {
+    this.waterboy.push(text);
+  }
 
-// // const accountingCopy = { name: "DUMMY", describe: accounting.describe };
+  addReport(text: string) {
+    this.waterboy.push(text);
+    this.lastReport = text;
+  }
+}
+
+// Modern Way
+
+// class USTeam extends EUTeam {
+//   constructor(id: string, public coach: string[]) {
+//     super(id, "IT");
+//   }
+// }
+
+////////////////////////////////////////////////////////////'///////////////
+
+// Liquid = EUTeam
+// ShopifyRebellion = IT EUTeam
+
+// Department = Liquid / EU Team
+// ITDepartment = ShopifyRebellion / US Team
+// AccountingDepartment = Talon / SEA Team
+
+const Liquid = new EUTeam("div1", "Accounting"); // This is basically creating a new JAVASCRIPT OBJECT based on the blueprint
+const ShopifyRebellion = new USTeam("div1", ["Bulba"]); // We're using the instanciated class which is the IT EUTeam
+const Talon = new SEATeam("div1", ["SunBhie"], ["Kuku"], ["lol"]);
+
+Liquid.addPlayer("Insania");
+Liquid.addPlayer("Boxi");
+Liquid.addPlayer("Zai");
+Liquid.addPlayer("Nisha");
+Liquid.addPlayer("Micke");
+
+// Liquid.players[2] = "Nisha"; // Wont work because its private
+
+Liquid.describe();
+Liquid.name = "Liquid";
+// Liquid.printPlayerInformation();
+
+ShopifyRebellion.addPlayer("Fly");
+ShopifyRebellion.addPlayer("Cr1t");
+ShopifyRebellion.addPlayer("SaberLight");
+ShopifyRebellion.addPlayer("Abed");
+ShopifyRebellion.addPlayer("Arteezy");
+// ShopifyRebellion.printPlayerInformation();
+
+Talon.addPlayer("23Savage");
+Talon.addPlayer("Mikoto");
+Talon.addPlayer("Jabz");
+Talon.addPlayer("Q");
+Talon.addPlayer("Oli~");
+
+Talon.getWater("Yoo get me some water");
+Talon.addPlayer("Bryan");
+Talon.addPlayer("Gabbi");
+
+Talon.mostRecentReport = "Year End Report";
+Talon.addReport("Something went wrong....");
+console.log(Talon.mostRecentReport);
+
+console.log(Liquid);
+console.log(ShopifyRebellion);
+console.log(Talon);
+
+// console.log(Liquid);
+
+// Liquid.addPlayer("Bryan");
+// Liquid.addPlayer("Kevin");
+
+// Liquid.describe();
+// Liquid.printPlayerInformation();
+
+// // const accountingCopy = { name: "DUMMY", describe: Liquid.describe };
 
 // // accountingCopy.describe();
 
@@ -117,3 +219,79 @@ accounting.printEmployeeInformation();
 // console.log(arr1);
 // console.log(arr2);
 // console.log(arr3);
+
+////////////////////////////////////////////////////////////////////////////
+
+// Copy
+
+// class EUTeam {
+//   // Field of a class
+//   // private id: string;
+//   // public name: string; // value type - you're basically assigning a type
+//   private players: string[] = [];
+//   // definies the key you'll have in your object
+
+//   constructor(private readonly id: string, public name: string) {
+//     // this.id = id;
+//     // this.name = n;
+//   }
+//   // constructor is a reseved keyword understood by typescript
+
+//   describe(this: EUTeam) {
+//     console.log(`EUTeam (${this.id}): ${this.name}`);
+//   }
+//   addPlayer(player: string) {
+//     // this.id = "d2";
+//     this.players.push(player);
+//   }
+//   printPlayerInformation() {
+//     console.log(this.players.length);
+//     console.log(this.players);
+//   }
+// }
+
+// class USTeam extends EUTeam {
+//   coach: string[];
+//   constructor(id: string, coach: string[]) {
+//     super(id, "IT"); // super has to be called before this. keyword
+//     this.coach = coach;
+//   }
+// }
+
+// // Modern Way
+
+// // class USTeam extends EUTeam {
+// //   constructor(id: string, public coach: string[]) {
+// //     super(id, "IT");
+// //   }
+// // }
+
+// ////////////////////////////////////////////////////////////'///////////////
+
+// // Liquid = EUTeam
+// // ShopifyRebellion = IT EUTeam
+
+// const Liquid = new EUTeam("d1", "Accounting"); // This is basically creating a new JAVASCRIPT OBJECT based on the blueprint
+// const ShopifyRebellion = new USTeam("d1", "IT EUTeam"); // We're using the instanciated class which is the IT EUTeam
+
+// Liquid.addPlayer("Insania");
+// Liquid.addPlayer("Boxi");
+// Liquid.addPlayer("Zai");
+// Liquid.addPlayer("Nisha");
+// Liquid.addPlayer("Micke");
+
+// // Liquid.players[2] = "Nisha"; // Wont work because its private
+
+// Liquid.describe();
+// Liquid.name = "NEW NAME";
+// Liquid.printPlayerInformation();
+
+// ShopifyRebellion.addPlayer("Fly");
+// ShopifyRebellion.addPlayer("Cr1t");
+// ShopifyRebellion.addPlayer("SaberLight");
+// ShopifyRebellion.addPlayer("Abed");
+// ShopifyRebellion.addPlayer("Arteezy");
+// ShopifyRebellion.printPlayerInformation();
+
+// console.log(Liquid);
+// console.log(ShopifyRebellion);
