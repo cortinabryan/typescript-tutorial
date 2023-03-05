@@ -1,19 +1,23 @@
-class EUTeam {
+abstract class Team {
+  static fiscalYear = 2023;
   // Field of a class
   // private id: string;
   // public name: string; // value type - you're basically assigning a type
   protected players: string[] = [];
   // definies the key you'll have in your object
 
-  constructor(private readonly id: string, public name: string) {
+  constructor(protected readonly id: string, public name: string) {
     // this.id = id;
     // this.name = n;
   }
   // constructor is a reseved keyword understood by typescript
 
-  describe(this: EUTeam) {
-    console.log(`EUTeam (${this.id}): ${this.name}`);
+  static createPlayer(name: string) {
+    return { name: name };
   }
+
+  abstract describe(this: Team): void;
+
   addPlayer(player: string) {
     // this.id = "d2";
     this.players.push(player);
@@ -24,15 +28,29 @@ class EUTeam {
   }
 }
 
-class USTeam extends EUTeam {
+class EUTeam extends Team {
   coach: string[];
   constructor(id: string, coach: string[]) {
     super(id, "Shopify Rebellion"); // super has to be called before this. keyword
     this.coach = coach;
   }
+  describe() {
+    console.log(`Welcome to EU - We are ${this.name} a ${this.id} team`);
+  }
 }
 
-class SEATeam extends EUTeam {
+class USTeam extends Team {
+  coach: string[];
+  constructor(id: string, coach: string[]) {
+    super(id, "Shopify Rebellion"); // super has to be called before this. keyword
+    this.coach = coach;
+  }
+  describe() {
+    console.log(`Welcome to USA - We are ${this.name} a ${this.id} team`);
+  }
+}
+
+class SEATeam extends Team {
   private lastReport: string;
 
   get mostRecentReport() {
@@ -62,6 +80,9 @@ class SEATeam extends EUTeam {
     this.lastReport = reports[0];
   }
 
+  describe() {
+    console.log(`Welcome to SEA - We are ${this.name} a ${this.id} team`);
+  }
   addPlayer(name: string) {
     if (name === "Bryan") {
       return;
@@ -81,7 +102,7 @@ class SEATeam extends EUTeam {
 
 // Modern Way
 
-// class USTeam extends EUTeam {
+// class USTeam extends Team {
 //   constructor(id: string, public coach: string[]) {
 //     super(id, "IT");
 //   }
@@ -89,15 +110,15 @@ class SEATeam extends EUTeam {
 
 ////////////////////////////////////////////////////////////'///////////////
 
-// Liquid = EUTeam
-// ShopifyRebellion = IT EUTeam
+// Liquid = Team
+// ShopifyRebellion = IT Team
 
 // Department = Liquid / EU Team
 // ITDepartment = ShopifyRebellion / US Team
 // AccountingDepartment = Talon / SEA Team
 
-const Liquid = new EUTeam("div1", "Accounting"); // This is basically creating a new JAVASCRIPT OBJECT based on the blueprint
-const ShopifyRebellion = new USTeam("div1", ["Bulba"]); // We're using the instanciated class which is the IT EUTeam
+const Liquid = new EUTeam("div1", ["Accounting"]); // This is basically creating a new JAVASCRIPT OBJECT based on the blueprint
+const ShopifyRebellion = new USTeam("div1", ["Bulba"]); // We're using the instanciated class which is the IT Team
 const Talon = new SEATeam("div1", ["SunBhie"], ["Kuku"], ["lol"]);
 
 Liquid.addPlayer("Insania");
@@ -111,6 +132,9 @@ Liquid.addPlayer("Micke");
 Liquid.describe();
 Liquid.name = "Liquid";
 // Liquid.printPlayerInformation();
+
+const player1 = Team.createPlayer("Arturito w/ a Durag");
+console.log(player1, Team.fiscalYear);
 
 ShopifyRebellion.addPlayer("Fly");
 ShopifyRebellion.addPlayer("Cr1t");
@@ -132,6 +156,10 @@ Talon.addPlayer("Gabbi");
 Talon.mostRecentReport = "Year End Report";
 Talon.addReport("Something went wrong....");
 console.log(Talon.mostRecentReport);
+
+Liquid.describe();
+ShopifyRebellion.describe();
+Talon.describe();
 
 console.log(Liquid);
 console.log(ShopifyRebellion);
@@ -224,7 +252,7 @@ console.log(Talon);
 
 // Copy
 
-// class EUTeam {
+// class Team {
 //   // Field of a class
 //   // private id: string;
 //   // public name: string; // value type - you're basically assigning a type
@@ -237,8 +265,8 @@ console.log(Talon);
 //   }
 //   // constructor is a reseved keyword understood by typescript
 
-//   describe(this: EUTeam) {
-//     console.log(`EUTeam (${this.id}): ${this.name}`);
+//   describe(this: Team) {
+//     console.log(`Team (${this.id}): ${this.name}`);
 //   }
 //   addPlayer(player: string) {
 //     // this.id = "d2";
@@ -250,7 +278,7 @@ console.log(Talon);
 //   }
 // }
 
-// class USTeam extends EUTeam {
+// class USTeam extends Team {
 //   coach: string[];
 //   constructor(id: string, coach: string[]) {
 //     super(id, "IT"); // super has to be called before this. keyword
@@ -260,7 +288,7 @@ console.log(Talon);
 
 // // Modern Way
 
-// // class USTeam extends EUTeam {
+// // class USTeam extends Team {
 // //   constructor(id: string, public coach: string[]) {
 // //     super(id, "IT");
 // //   }
@@ -268,11 +296,11 @@ console.log(Talon);
 
 // ////////////////////////////////////////////////////////////'///////////////
 
-// // Liquid = EUTeam
-// // ShopifyRebellion = IT EUTeam
+// // Liquid = Team
+// // ShopifyRebellion = IT Team
 
-// const Liquid = new EUTeam("d1", "Accounting"); // This is basically creating a new JAVASCRIPT OBJECT based on the blueprint
-// const ShopifyRebellion = new USTeam("d1", "IT EUTeam"); // We're using the instanciated class which is the IT EUTeam
+// const Liquid = new Team("d1", "Accounting"); // This is basically creating a new JAVASCRIPT OBJECT based on the blueprint
+// const ShopifyRebellion = new USTeam("d1", "IT Team"); // We're using the instanciated class which is the IT Team
 
 // Liquid.addPlayer("Insania");
 // Liquid.addPlayer("Boxi");

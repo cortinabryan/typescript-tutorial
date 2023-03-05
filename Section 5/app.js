@@ -14,9 +14,9 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var EUTeam = /** @class */ (function () {
+var Team = /** @class */ (function () {
     // definies the key you'll have in your object
-    function EUTeam(id, name) {
+    function Team(id, name) {
         this.id = id;
         this.name = name;
         // Field of a class
@@ -27,19 +27,32 @@ var EUTeam = /** @class */ (function () {
         // this.name = n;
     }
     // constructor is a reseved keyword understood by typescript
-    EUTeam.prototype.describe = function () {
-        console.log("EUTeam (".concat(this.id, "): ").concat(this.name));
+    Team.createPlayer = function (name) {
+        return { name: name };
     };
-    EUTeam.prototype.addPlayer = function (player) {
+    Team.prototype.addPlayer = function (player) {
         // this.id = "d2";
         this.players.push(player);
     };
-    EUTeam.prototype.printPlayerInformation = function () {
+    Team.prototype.printPlayerInformation = function () {
         console.log(this.players.length);
         console.log(this.players);
     };
-    return EUTeam;
+    Team.fiscalYear = 2023;
+    return Team;
 }());
+var EUTeam = /** @class */ (function (_super) {
+    __extends(EUTeam, _super);
+    function EUTeam(id, coach) {
+        var _this = _super.call(this, id, "Shopify Rebellion") || this;
+        _this.coach = coach;
+        return _this;
+    }
+    EUTeam.prototype.describe = function () {
+        console.log("Welcome to EU - We are ".concat(this.name, " a ").concat(this.id, " team"));
+    };
+    return EUTeam;
+}(Team));
 var USTeam = /** @class */ (function (_super) {
     __extends(USTeam, _super);
     function USTeam(id, coach) {
@@ -47,8 +60,11 @@ var USTeam = /** @class */ (function (_super) {
         _this.coach = coach;
         return _this;
     }
+    USTeam.prototype.describe = function () {
+        console.log("Welcome to USA - We are ".concat(this.name, " a ").concat(this.id, " team"));
+    };
     return USTeam;
-}(EUTeam));
+}(Team));
 var SEATeam = /** @class */ (function (_super) {
     __extends(SEATeam, _super);
     function SEATeam(id, coach, waterboy, reports) {
@@ -75,6 +91,9 @@ var SEATeam = /** @class */ (function (_super) {
         enumerable: false,
         configurable: true
     });
+    SEATeam.prototype.describe = function () {
+        console.log("Welcome to SEA - We are ".concat(this.name, " a ").concat(this.id, " team"));
+    };
     SEATeam.prototype.addPlayer = function (name) {
         if (name === "Bryan") {
             return;
@@ -89,21 +108,21 @@ var SEATeam = /** @class */ (function (_super) {
         this.lastReport = text;
     };
     return SEATeam;
-}(EUTeam));
+}(Team));
 // Modern Way
-// class USTeam extends EUTeam {
+// class USTeam extends Team {
 //   constructor(id: string, public coach: string[]) {
 //     super(id, "IT");
 //   }
 // }
 ////////////////////////////////////////////////////////////'///////////////
-// Liquid = EUTeam
-// ShopifyRebellion = IT EUTeam
+// Liquid = Team
+// ShopifyRebellion = IT Team
 // Department = Liquid / EU Team
 // ITDepartment = ShopifyRebellion / US Team
 // AccountingDepartment = Talon / SEA Team
-var Liquid = new EUTeam("div1", "Accounting"); // This is basically creating a new JAVASCRIPT OBJECT based on the blueprint
-var ShopifyRebellion = new USTeam("div1", ["Bulba"]); // We're using the instanciated class which is the IT EUTeam
+var Liquid = new EUTeam("div1", ["Accounting"]); // This is basically creating a new JAVASCRIPT OBJECT based on the blueprint
+var ShopifyRebellion = new USTeam("div1", ["Bulba"]); // We're using the instanciated class which is the IT Team
 var Talon = new SEATeam("div1", ["SunBhie"], ["Kuku"], ["lol"]);
 Liquid.addPlayer("Insania");
 Liquid.addPlayer("Boxi");
@@ -114,6 +133,8 @@ Liquid.addPlayer("Micke");
 Liquid.describe();
 Liquid.name = "Liquid";
 // Liquid.printPlayerInformation();
+var player1 = Team.createPlayer("Arturito w/ a Durag");
+console.log(player1, Team.fiscalYear);
 ShopifyRebellion.addPlayer("Fly");
 ShopifyRebellion.addPlayer("Cr1t");
 ShopifyRebellion.addPlayer("SaberLight");
@@ -131,6 +152,9 @@ Talon.addPlayer("Gabbi");
 Talon.mostRecentReport = "Year End Report";
 Talon.addReport("Something went wrong....");
 console.log(Talon.mostRecentReport);
+Liquid.describe();
+ShopifyRebellion.describe();
+Talon.describe();
 console.log(Liquid);
 console.log(ShopifyRebellion);
 console.log(Talon);
@@ -194,7 +218,7 @@ console.log(Talon);
 // console.log(arr3);
 ////////////////////////////////////////////////////////////////////////////
 // Copy
-// class EUTeam {
+// class Team {
 //   // Field of a class
 //   // private id: string;
 //   // public name: string; // value type - you're basically assigning a type
@@ -205,8 +229,8 @@ console.log(Talon);
 //     // this.name = n;
 //   }
 //   // constructor is a reseved keyword understood by typescript
-//   describe(this: EUTeam) {
-//     console.log(`EUTeam (${this.id}): ${this.name}`);
+//   describe(this: Team) {
+//     console.log(`Team (${this.id}): ${this.name}`);
 //   }
 //   addPlayer(player: string) {
 //     // this.id = "d2";
@@ -217,7 +241,7 @@ console.log(Talon);
 //     console.log(this.players);
 //   }
 // }
-// class USTeam extends EUTeam {
+// class USTeam extends Team {
 //   coach: string[];
 //   constructor(id: string, coach: string[]) {
 //     super(id, "IT"); // super has to be called before this. keyword
@@ -225,16 +249,16 @@ console.log(Talon);
 //   }
 // }
 // // Modern Way
-// // class USTeam extends EUTeam {
+// // class USTeam extends Team {
 // //   constructor(id: string, public coach: string[]) {
 // //     super(id, "IT");
 // //   }
 // // }
 // ////////////////////////////////////////////////////////////'///////////////
-// // Liquid = EUTeam
-// // ShopifyRebellion = IT EUTeam
-// const Liquid = new EUTeam("d1", "Accounting"); // This is basically creating a new JAVASCRIPT OBJECT based on the blueprint
-// const ShopifyRebellion = new USTeam("d1", "IT EUTeam"); // We're using the instanciated class which is the IT EUTeam
+// // Liquid = Team
+// // ShopifyRebellion = IT Team
+// const Liquid = new Team("d1", "Accounting"); // This is basically creating a new JAVASCRIPT OBJECT based on the blueprint
+// const ShopifyRebellion = new USTeam("d1", "IT Team"); // We're using the instanciated class which is the IT Team
 // Liquid.addPlayer("Insania");
 // Liquid.addPlayer("Boxi");
 // Liquid.addPlayer("Zai");
