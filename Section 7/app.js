@@ -37,3 +37,37 @@ function extractAndConvert(obj, key) {
     return "value " + obj[key];
 }
 console.log(extractAndConvert({ name: "Abed" }, "name"));
+// Generic Classes
+class DataStorage {
+    constructor() {
+        this.data = [];
+    }
+    // private data: string | number | boolean[] = [];
+    addItem(item) {
+        this.data.push(item);
+    }
+    removeItem(item) {
+        if (this.data.indexOf(item) === -1) {
+            return;
+        }
+        this.data.splice(this.data.indexOf(item), 1);
+    }
+    getItems() {
+        return [...this.data];
+    }
+}
+const textStorage = new DataStorage();
+textStorage.addItem("Coffee");
+textStorage.addItem("Milk");
+textStorage.removeItem("Milk");
+console.log(textStorage.getItems());
+const numberStorage = new DataStorage();
+function createCourseGoal(title, description, date) {
+    let courseGoal = {};
+    courseGoal.title = title;
+    courseGoal.description = description;
+    courseGoal.completeUntil = date;
+    return courseGoal;
+}
+const names = ["Topson", "Ceb"];
+// names.push("JerAx");
